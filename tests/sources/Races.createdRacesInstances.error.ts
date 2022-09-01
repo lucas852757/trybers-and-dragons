@@ -1,4 +1,4 @@
-import Race from '../../src/Races';
+import Race from '../../src/Races/Race';
 
 let ok = true;
 try {

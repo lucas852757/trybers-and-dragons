@@ -1,3 +1,3 @@
-import Race from '../../src/Races';
+import Race from '../../src/Races/Race';
 
 Race.createdRacesInstances;

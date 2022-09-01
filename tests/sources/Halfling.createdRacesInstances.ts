@@ -1,4 +1,4 @@
-import { Halfling } from '../../src/Races';
+import { Halfling } from '../../src/Races/Race';
 
 const result = () => {
   const r = [];
