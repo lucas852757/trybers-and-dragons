@@ -1,4 +1,4 @@
-import { Elf } from '../../src/Races/Race';
+import { Elf } from '../../src/Races/';
 
 const result = () => {
   const r = [];
