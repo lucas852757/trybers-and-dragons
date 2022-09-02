@@ -1,4 +1,4 @@
-import Race, { Dwarf } from '../../src/Races/Race';
+import Race, { Dwarf } from '../../src/Races/';
 
 const x = (y: Race) => {
 

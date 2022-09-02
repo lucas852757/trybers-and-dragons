@@ -1,4 +1,4 @@
-import { Dwarf } from '../../src/Races/Race';
+import { Dwarf } from '../../src/Races/';
 
 const result = () => {
   const r = [];
