@@ -10,11 +10,10 @@ class Character implements Fighter {
   private _archetype: Archetype;
   private _maxLifePoints: number;
   private _lifePoints: number;
-  private _strength: number; 
+  private _strength: number;
   private _defense: number; 
   private _dexterity: number; 
-  private _energy!: Energy;
-  private _name: string;
+  private _energy: Energy;
 
   constructor(
     name: string,
@@ -26,20 +25,29 @@ class Character implements Fighter {
     this._strength = getRandomInt(1, 10);
     this._defense = getRandomInt(1, 10);
     this._dexterity = getRandomInt(1, 10);
-    this._energy.type_ = this._archetype.energyType;
-    this._energy.amount = getRandomInt(1, 10);
-    this._name = name;
+    this._energy = {
+      type_: this._archetype.energyType,
+      amount: getRandomInt(1, 10),
+    };
   }
 
-  getLoseLifPoints(): number {
-    return this._lifePoints;
+  add():void {
+    this._maxLifePoints += getRandomInt(1, 10);
+    this._strength += getRandomInt(1, 10);
+    this._defense += getRandomInt(1, 10);
+    this._dexterity += getRandomInt(1, 10);
+    this._energy.amount = 10;
+  }
+
+  setMaxPoints(n: number) {
+    this._maxLifePoints = n;
   }
 
   setLoseLifPoints(n: number):void {
     this._lifePoints -= n;
   }
 
-  setLifPoints(n: number):void {
+  setLifePoints(n: number):void {
     this._lifePoints = n;
   }
 
@@ -56,47 +64,34 @@ class Character implements Fighter {
   }
 
   attack(enemy: Fighter): void {
-    // throw new Error('Method not implemented.');
-    enemy.receiveDamage(this.strength);
+    enemy.receiveDamage(this._strength);
   }
 
   special(enemy: Fighter): void {
-    // throw new Error('Method not implemented.');
     if (enemy.lifePoints === this.lifePoints) {
-      this.setLifPoints(-2);
+      this.setLifePoints(-2);
     }
   }
 
   levelUp(): void {
-    // throw new Error('Method not implemented.');
-    this.maxLifePoints = getRandomInt(1, 10);
-    this.setStrength(getRandomInt(1, 10));
-    if (this.maxLifePoints > this.race.maxLifePoints) {
-      this.maxLifePoints = this.race.maxLifePoints;
-      this.setLifPoints(this.maxLifePoints);
+    this.add();
+    if (this._maxLifePoints > this.race.maxLifePoints) {
+      this._maxLifePoints = this.race.maxLifePoints;
+      this.setMaxPoints(this._maxLifePoints);
+      this.setLifePoints(this._maxLifePoints);
     }
   }
 
   receiveDamage(attackPoints: number): number {
-    // throw new Error('Method not implemented.');
-    // static l = 0;
     const damage = this.defense - attackPoints;
     if (damage > 0) {
       this.setLoseLifPoints(1);
-      if (this.getLoseLifPoints() <= 0) {
-        this.setLifPoints(-1);
+      if (this.lifePoints <= 0) {
+        this.setLifePoints(-1);
       }
     }
     
-    return this.getLoseLifPoints();
-  }
-
-  get name() {
-    return this._name;
-  }
-
-  get dexterity():number {
-    return this._dexterity;
+    return this.lifePoints;
   }
   
   get race() {
@@ -119,9 +114,16 @@ class Character implements Fighter {
     return this._defense;
   }
 
+  get dexterity():number {
+    return this._dexterity;
+  }
+
   get energy(): Energy {
-    const ret = this._energy;
-    return ret;
+    const fakeObj = {
+      type_: this._archetype.energyType,
+      amount: this._energy.amount, 
+    };
+    return fakeObj;
   } 
 
   get maxLifePoints():number {
