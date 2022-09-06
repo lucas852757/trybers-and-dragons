@@ -19,17 +19,15 @@ class Monster implements SimpleFighter {
   }
 
   receiveDamage(attackPoints: number): number {
-    // throw new Error('Method not implemented.');
-    // static l = 0;
-    const damage = this.lifePoints - attackPoints;
+    const damage = attackPoints - this._lifePoints;
     if (damage > 0) {
-      this.setLoseLifPoints(1);
-      if (this.lifePoints <= 0) {
-        this.setLifePoints(-1);
-      }
+      this._lifePoints -= damage;
+    }
+    if (this._lifePoints <= 0) {
+      this._lifePoints = -1;
     }
     
-    return this.lifePoints;
+    return this._lifePoints;
   }
 
   setLoseLifPoints(n: number) {
