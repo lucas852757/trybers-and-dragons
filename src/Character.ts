@@ -39,16 +39,8 @@ class Character implements Fighter {
     this._energy.amount = 10;
   }
 
-  setMaxPoints(n: number) {
-    this._maxLifePoints = n;
-  }
-
   setLoseLifPoints(n: number):void {
     this._lifePoints -= n;
-  }
-
-  setLifePoints(n: number):void {
-    this._lifePoints = n;
   }
 
   setStrength(n: number) {
@@ -69,7 +61,7 @@ class Character implements Fighter {
 
   special(enemy: Fighter): void {
     if (enemy.lifePoints === this.lifePoints) {
-      this.setLifePoints(-2);
+      this._lifePoints = -2;
     }
   }
 
@@ -77,21 +69,20 @@ class Character implements Fighter {
     this.add();
     if (this._maxLifePoints > this.race.maxLifePoints) {
       this._maxLifePoints = this.race.maxLifePoints;
-      this.setMaxPoints(this._maxLifePoints);
-      this.setLifePoints(this._maxLifePoints);
+      this._lifePoints = this._maxLifePoints;
     }
   }
 
   receiveDamage(attackPoints: number): number {
-    const damage = this.defense - attackPoints;
+    const damage = attackPoints - this._defense;
     if (damage > 0) {
-      this.setLoseLifPoints(1);
-      if (this.lifePoints <= 0) {
-        this.setLifePoints(-1);
-      }
+      this._lifePoints -= damage;
+    }
+    if (this._lifePoints <= 0) {
+      this._lifePoints = -1;
     }
     
-    return this.lifePoints;
+    return this._lifePoints;
   }
   
   get race() {
