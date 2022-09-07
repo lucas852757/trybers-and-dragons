@@ -2,9 +2,9 @@ import Monster from './Monster';
 
 class Dragon extends Monster {
   protected _lifePoints: number;
-  constructor(dragonFace = 999) {
-    super(dragonFace);
-    this._lifePoints = dragonFace;
+  constructor(lifePoints = 999) {
+    super(lifePoints);
+    this._lifePoints = lifePoints;
   }
 }
 
